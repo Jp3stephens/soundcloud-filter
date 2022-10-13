@@ -113,10 +113,20 @@ class User:
         return [g for g in gen()]
 
 class PlayList: 
-    def __init__(self, search_term): 
+    def __init__(self, search_term, sc): 
         self.base_url = 'https://soundcloud.com/search/sets?q='
         self.search_term = search_term
+        self.sc = sc
         self.url = self.base_url + self.search_term
+
+    def search(self): 
+        r = session.get(self.url)
+        r.html.render()
+        print('yo certainly in this thang'); 
+        for like in r.html.find('button[aria-label="Like"]'): 
+            print(like.text)
+
+    
 
 
 class SoundCloud:
