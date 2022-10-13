@@ -126,6 +126,25 @@ class PlayList:
         for like in r.html.find('button[aria-label="Like"]'): 
             print(like.text)
 
+    def search_playwright(self):
+        from playwright.sync_api import sync_playwright
+        import json
+        print('howdy')
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=False)
+            page = browser.new_page()
+            print('this is here')
+            def handle_response(response):
+                print('this is response', response)
+                print('this is reponse url', response.url)
+                if ("tracks?client_id" in response.url):
+                    print('tracks exists')
+                    print(json.dumps(response.json()))
+            page.on("response", handle_response)
+            page.goto(self.url, wait_until="networkidle") 
+            page.context.close() 
+            browser.close()
+        
     
 
 
