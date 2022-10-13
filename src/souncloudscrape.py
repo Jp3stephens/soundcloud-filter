@@ -112,6 +112,12 @@ class User:
 
         return [g for g in gen()]
 
+class PlayList: 
+    def __init__(self, search_term): 
+        self.base_url = 'https://soundcloud.com/search/sets?q='
+        self.search_term = search_term
+        self.url = self.base_url + self.search_term
+
 
 class SoundCloud:
     def __init__(self):
@@ -119,6 +125,9 @@ class SoundCloud:
 
     def _construct_url(self, *frags):
         return '{}/{}'.format(self.base_url, '/'.join(frags))
+
+    def get_playlists(self, search_term):
+        return PlayList(search_term=search_term, sc=self)
 
     def get_user(self, username):
         return User(username=username, sc=self)
