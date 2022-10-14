@@ -75,7 +75,6 @@ class User:
 
     @property
     def following(self):
-
         def gen():
             r = session.get(self.sc._construct_url(self.username, 'following'))
 
