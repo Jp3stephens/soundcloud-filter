@@ -137,7 +137,7 @@ class PlayList:
                 print('this is response', response)
                 print('this is reponse url', response.url)
                 if ("tracks?" in response.url):
-                    print('tracks exists \n \n \n YO! It exist my dawg')
+                   
                     print(json.dumps(response.json()))
             page.on("response", handle_response)
             page.goto(self.url, wait_until="networkidle") 
