@@ -134,10 +134,11 @@ class PlayList:
             page = browser.new_page()
             print('this is here')
             def handle_response(response):
-                print('this is response', response)
-                print('this is reponse url', response.url)
-                if ("tracks?" in response.url):
-                   
+                
+                if ("https://api-v2.soundcloud.com/search" in response.url):
+                    # grab all the likes and reposts
+                    # order by most reposts and likes 
+                    # return sorted list
                     print(json.dumps(response.json()))
             page.on("response", handle_response)
             page.goto(self.url, wait_until="networkidle") 
