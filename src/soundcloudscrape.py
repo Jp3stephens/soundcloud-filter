@@ -139,7 +139,15 @@ class PlayList:
                     # grab all the likes and reposts
                     # order by most reposts and likes 
                     # return sorted list
-                    print(json.dumps(response.json()))
+                    # print(json.dumps(response.json()))
+                    response_list = response.json()
+                    collection_list = response_list['collection']
+                    print("We have response_list")
+                    print(len(collection_list))
+                    for song in collection_list:
+                        print(song['title'])
+                        print(song['likes_count'])
+                        # okay so now just need to sort...
             page.on("response", handle_response)
             page.goto(self.url, wait_until="networkidle") 
             page.context.close() 
@@ -160,3 +168,7 @@ class SoundCloud:
 
     def get_user(self, username):
         return User(username=username, sc=self)
+    
+    def run_tests():
+        sc = SoundCloud()
+        sc.get_playlists('classic').search_playwright()
