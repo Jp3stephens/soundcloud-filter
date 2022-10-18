@@ -129,6 +129,8 @@ class PlayList:
         from playwright.sync_api import sync_playwright
         import json
         print('howdy')
+        def sort_by_likes(song):
+            return song['likes_count']
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=False)
             page = browser.new_page()
@@ -144,14 +146,22 @@ class PlayList:
                     collection_list = response_list['collection']
                     print("We have response_list")
                     print(len(collection_list))
+                    collection_list.sort(reverse=True, key=sort_by_likes)
+                    print("We have sorted_collection")
+                    print("first look like: ", collection_list[0])
                     for song in collection_list:
-                        print(song['title'])
-                        print(song['likes_count'])
+                        print("title", song['title'])
+                        print("likes: ", song['likes_count'])
+                        print("resposts: ", song['reposts_count'])
+                        print("description: ", song['description'])
+                        print("\n \n \n")
+                        
                         # okay so now just need to sort...
             page.on("response", handle_response)
             page.goto(self.url, wait_until="networkidle") 
             page.context.close() 
             browser.close()
+   
         
     
 
